@@ -51,7 +51,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: fabricioramorim/runpod-hunyuan
+          images: fabrioceras/runpod-hunyuan
           tags: |
             type=raw,value=${{ github.ref_name }}
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
