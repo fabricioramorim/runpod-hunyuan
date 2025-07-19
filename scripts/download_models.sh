@@ -20,29 +20,29 @@ download_if_not_exists() {
 
 # Download models
 download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/Sexy_Dance_e15.safetensors" \
-    "${MODEL_DIR}/checkpoints/Sexy_Dance_e15.safetensors"
+    "${MODEL_DIR}/loras/Sexy_Dance_e15.safetensors"
 
 download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/Ass_Twerk.safetensors" \
-    "${MODEL_DIR}/checkpoints/Ass_Twerk.safetensors"
+    "${MODEL_DIR}/loras/Ass_Twerk.safetensors"
 
 download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/Candid_Ass_v1.safetensors" \
-    "${MODEL_DIR}/checkpoints/Candid_Ass_v1.safetensors"
+    "${MODEL_DIR}/loras/Candid_Ass_v1.safetensors"
 
 download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/Candid_Change_v2e45.safetensors" \
-    "${MODEL_DIR}/checkpoints/Candid_Change_v2e45.safetensors"
+    "${MODEL_DIR}/loras/Candid_Change_v2e45.safetensors"
     
 download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/Tw3rk_e15.safetensors" \
-    "${MODEL_DIR}/checkpoints/Tw3rk_e15.safetensors"
+    "${MODEL_DIR}/loras/Tw3rk_e15.safetensors"
 
 download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/boreal-hl-v1.safetensors" \
-    "${MODEL_DIR}/checkpoints/boreal-hl-v1.safetensors"
+    "${MODEL_DIR}/loras/boreal-hl-v1.safetensors"
 
 download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/jiggly-everything-hunyuan-v1.1-vfx_ai.safetensors" \
-    "${MODEL_DIR}/checkpoints/jiggly-everything-hunyuan-v1.1-vfx_ai.safetensors"
+    "${MODEL_DIR}/loras/jiggly-everything-hunyuan-v1.1-vfx_ai.safetensors"
     
 download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/porn_salt.safetensors" \
-    "${MODEL_DIR}/checkpoints/porn_salt.safetensors"
-
+    "${MODEL_DIR}/loras/porn_salt.safetensors"
+s
 download_if_not_exists "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/diffusion_models/hunyuan_video_t2v_720p_bf16.safetensors" \
     "${MODEL_DIR}/unet/hunyuan_video_t2v_720p_bf16.safetensors"
 
