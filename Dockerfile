@@ -1,8 +1,11 @@
 FROM nvidia/cuda:12.9.1-cudnn-runtime-ubuntu22.04
 
+# Set DEBIAN_FRONTEND to noninteractive to prevent prompts during apt-get operations
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install runtime dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3.13 \
+    python3.10 \
     python3-pip \
     git \
     ffmpeg \
@@ -13,9 +16,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean
 
-# Create symlinks for Python
-RUN ln -sf /usr/bin/python3.13 /usr/bin/python && \
-    ln -sf /usr/bin/python3.13 /usr/bin/python3
+# Create symlinks for Python (adjusting for python3.10)
+RUN ln -sf /usr/bin/python3.10 /usr/bin/python && \
+    ln -sf /usr/bin/python3.10 /usr/bin/python3
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
