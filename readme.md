@@ -23,7 +23,7 @@ This guide will walk you through setting up and running the Hunyuan Video Genera
 
 1. In the template selection:
    - Select "Custom Template"
-   - Container Image: `dihan/hunyuan-runpod:main`
+   - Container Image: `fabricioramorim/runpod-hunyuan:main`
    - Choose a GPU (Recommended: RTX 4090 or better)
    - Select at least 24GB RAM
    - Storage: Minimum 20GB (Recommended: 40GB)
@@ -131,4 +131,4 @@ For issues or questions:
 
 - [ComfyUI Documentation](https://github.com/comfyanonymous/ComfyUI)
 - [RunPod Documentation](https://docs.runpod.io/)
-- [Hunyuan Video Generation Repository](https://github.com/dihan/hunyuan-runpod)
+- [Hunyuan Video Generation Repository](https://github.com/fabricioramorim/runpod-hunyuan)
