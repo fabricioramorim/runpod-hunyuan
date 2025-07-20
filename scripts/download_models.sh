@@ -2,47 +2,50 @@
 set -e
 
 MODEL_DIR="/workspace/ComfyUI/models"
+LORA_DIR="${MODEL_DIR}/loras"
+
 mkdir -p ${MODEL_DIR}/{checkpoints,text_encoder,clip_vision,vae}
+mkdir -p ${LORA_DIR} # Garante que o diretório loras exista
 
 download_if_not_exists() {
     local url=$1
     local dest=$2
     local filename=$(basename "$dest")
-    
+
     if [ ! -f "$dest" ]; then
-        echo "DOWNLOADING --  $filename..."
+        echo "BAIXANDO -- $filename..."
         wget -q --show-progress "$url" -O "$dest"
-        echo "COMPLETED $filename successfully"
+        if [ $? -eq 0 ]; then
+            echo "CONCLUÍDO $filename com sucesso"
+        else
+            echo "FALHA ao baixar $filename. Verifique a URL ou sua conexão."
+        fi
     else
-        echo "$filename already exists, skipping download"
+        echo "$filename já existe, pulando download"
     fi
 }
 
-# Download models
-download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/Sexy_Dance_e15.safetensors" \
-    "${MODEL_DIR}/loras/Sexy_Dance_e15.safetensors"
+# URL base do repositório para os LoRAs
+HUGGINGFACE_LORA_BASE_URL="https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/"
+HUGGINGFACE_LORA_REPO_BROWSE_URL="https://huggingface.co/datasets/oggimrm/HunyuanVideo/tree/main"
 
-download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/Ass_Twerk.safetensors" \
-    "${MODEL_DIR}/loras/Ass_Twerk.safetensors"
+echo "Buscando arquivos .safetensors no repositório HunyuanVideo..."
 
-download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/Candid_Ass_v1.safetensors" \
-    "${MODEL_DIR}/loras/Candid_Ass_v1.safetensors"
+# Usa curl para baixar a página HTML e grep/sed para extrair os nomes dos arquivos .safetensors
+# Esta abordagem pode ser frágil se a estrutura HTML do Hugging Face mudar
+# Uma alternativa mais robusta seria usar a API do Hugging Face, mas é mais complexa.
+FILES_TO_DOWNLOAD=$(curl -s "$HUGGINGFACE_LORA_REPO_BROWSE_URL" | grep -oP 'href="[^"]+\.safetensors"' | sed -E 's/href="([^"]+)"/\1/' | xargs -n 1 basename)
 
-download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/Candid_Change_v2e45.safetensors" \
-    "${MODEL_DIR}/loras/Candid_Change_v2e45.safetensors"
-    
-download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/Tw3rk_e15.safetensors" \
-    "${MODEL_DIR}/loras/Tw3rk_e15.safetensors"
+if [ -z "$FILES_TO_DOWNLOAD" ]; then
+    echo "Nenhum arquivo .safetensors encontrado no repositório. Verifique a URL ou a estrutura da página."
+else
+    for filename in $FILES_TO_DOWNLOAD; do
+        download_if_not_exists "${HUGGINGFACE_LORA_BASE_URL}${filename}" \
+            "${LORA_DIR}/${filename}"
+    done
+fi
 
-download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/boreal-hl-v1.safetensors" \
-    "${MODEL_DIR}/loras/boreal-hl-v1.safetensors"
-
-download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/jiggly-everything-hunyuan-v1.1-vfx_ai.safetensors" \
-    "${MODEL_DIR}/loras/jiggly-everything-hunyuan-v1.1-vfx_ai.safetensors"
-    
-download_if_not_exists "https://huggingface.co/datasets/oggimrm/HunyuanVideo/resolve/main/porn_salt.safetensors" \
-    "${MODEL_DIR}/loras/porn_salt.safetensors"
-s
+# Download de outros modelos (mantidos como estavam)
 download_if_not_exists "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/diffusion_models/hunyuan_video_t2v_720p_bf16.safetensors" \
     "${MODEL_DIR}/unet/hunyuan_video_t2v_720p_bf16.safetensors"
 
@@ -57,4 +60,4 @@ download_if_not_exists "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged
 
 /install_nodes.sh
 
-echo "All models downloaded successfully"
+echo "Todos os modelos baixados com sucesso (incluindo LoRAs dinâmicos)."
